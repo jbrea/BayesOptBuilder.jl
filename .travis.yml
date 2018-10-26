@@ -1,8 +1,8 @@
 language: julia
 os:
-  - linux
+- linux
 julia:
-  - 1.0
+- 1.0
 notifications:
   email: false
 git:
@@ -10,17 +10,22 @@ git:
 cache:
   timeout: 1000
   directories:
-    - downloads
+  - downloads
 env:
   global:
-    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
-    - BINARYBUILDER_AUTOMATIC_APPLE=true
+  - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+  - BINARYBUILDER_AUTOMATIC_APPLE=true
 sudo: required
-
-# Before anything else, get the latest versions of things
+deploy:
+  provider: releases
+  api_key:
+    secure: gIm+cil4sLK+srJfP84bwbUFePKwMNiA9xJ1Mkxhwx48hHGRzutjjCO29ET69uGaPdLE8LZaLxIoOdSC6E/Y6LmfJQHVqp/bQoa5KQ/cqFjj26WFgmXAtTSDqBXzotQDA/b7dBro5gulT1zq7cSKMMYjp17t5jti0+IxI2v23pSdiHBkiccKh00G25/ykyM1jYC/XAA6yQhe8+iqPbHZLweP98zyupROnLwHG068PG6685qcPjahCOtPDu4HrlCG7V/Z0KA+MvDxPD1sNOlNM07XiPBDcPipK1VcBWZHTZxTjqzhTP4S4jLcd9qPtU5dbZOJbrCu4n+KrO9dhcwXlXY7SeIwhlC97zdZLs0ZcjxeDxICCTW2STRXTydG+2Inkv1JByW7J22m2QlPzZRXMID3RqlbN/My1AYeJ3JAY36n2KQhAVnpOno1TVIsXkQff+R03Jh+jh5j+j9zKU/j8oVTZyde5sg5dHXV/qTIafLAWWzwNQf8y42cX3rYmg6PWwIL5OI0SsM4F/8mG1tyTm6+Eq5iAPxBp8156/Uu5g1TJ3fPiNXsdJwBn1QwieyFhszhzVyOvBE6nUH8a7Se+eH/RgchzglPFdfvPU/XSUp8dhUkGCzFIJ63pyM+qbb8Q3971b9lC39Nhenps9NSYX2nbjbkZT1mXKcwScIJX6c=
+  file_glob: true
+  file: products/*
+  on:
+    repo: jbrea/BayesOptBuilder.jl
+    tags: true
 before_script:
-  - julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
-
+- julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
 script:
-  - julia build_tarballs.jl
-
+- julia build_tarballs.jl

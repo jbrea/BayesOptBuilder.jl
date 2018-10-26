@@ -38,6 +38,7 @@ platforms = [
 # The products that we will ensure are always built
 products(prefix) = [
     LibraryProduct(prefix, "libbayesopt", :libbayesopt)
+    LibraryProduct(prefix, "libnlopt", :libnlopt)
 ]
 
 # Dependencies that must be installed before this package can be built
